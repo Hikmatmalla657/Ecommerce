@@ -111,10 +111,16 @@ function Navbar() {
               {darkMode ? 'Dark' : 'Light'}
             </button>
             <Link
-              to="/Login"
+              to="/login"
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-full transition duration-200 shadow-sm hover:shadow-md"
             >
               Login
+            </Link>
+            <Link
+              to="/signup"
+              className="bg-white text-slate-900 font-semibold px-4 py-2 rounded-full transition duration-200 shadow-sm hover:shadow-md"
+            >
+              Sign Up
             </Link>
           </div>
         </div>
@@ -157,7 +163,7 @@ function Navbar() {
                 )}
               </Link>
               <Link
-                to="/Login"
+                to="/login"
                 onClick={() => setIsMenuOpen(false)}
                 className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-full transition duration-200 text-center"
               >

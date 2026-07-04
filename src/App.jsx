@@ -25,6 +25,7 @@ function App() {
       <Route path='products' element={<Productspage/>} />
       <Route path='products/:id' element={<SingleProductPage/>} />
       <Route path='login' element={<LoginPage/>} />
+      <Route path='signup' element={<LoginPage mode="signup" />} />
       
   </Route>
 

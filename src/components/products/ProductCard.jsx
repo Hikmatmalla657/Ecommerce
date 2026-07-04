@@ -11,6 +11,7 @@ function ProductCard({product}) {
 const { addToCart, isInCart, removeFromCart } = useCart();
 const { darkMode } = useTheme();
 
+const rating = product.rating || { rate: 0, count: 0 };
 const isCart = isInCart(product.id);
 
 
@@ -50,7 +51,7 @@ const handleAddCart = () => {
 
 src={product.image} 
 
- alt={product.name} 
+ alt={product.title} 
 
  className="max-w-full max-h-full object-contain"
 
@@ -72,11 +73,11 @@ src={product.image}
 
  <div className="flex items-center gap-1 mb-2">
 
-<span className="text-yellow-400 text-sm md:text-base">{'⭐'.repeat(Math.floor(product.rating.rate))}</span>
+<span className="text-yellow-400 text-sm md:text-base">{'⭐'.repeat(Math.floor(rating.rate))}</span>
 
-<span className={`text-xs md:text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-gray-700'}`}>{product.rating.rate}</span>
+<span className={`text-xs md:text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-gray-700'}`}>{rating.rate}</span>
 
-<span className={`text-xs md:text-sm ${darkMode ? 'text-slate-400' : 'text-gray-600'}`}>({product.rating.count})</span>
+<span className={`text-xs md:text-sm ${darkMode ? 'text-slate-400' : 'text-gray-600'}`}>({rating.count})</span>
 
  </div>
 
