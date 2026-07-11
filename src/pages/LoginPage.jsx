@@ -1,10 +1,10 @@
 import React from 'react'
 import LoginForm from '../components/login/LoginForm'
 
-function LoginPage() {
+function LoginPage({ mode = 'login' }) {
   return (
     <div>
-        <LoginForm/>
+        <LoginForm mode={mode} />
     </div>
   )
 }

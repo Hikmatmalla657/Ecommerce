@@ -1,18 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 
 function LoginForm({ mode = 'login' }) {
 
-    const { login, setEmail, setPassword, email, password, fullName, setFullName }= useAuth();
+    const { isLoggedIn, login, setEmail, setPassword, email, password, fullName, setFullName } = useAuth();
     const { darkMode } = useTheme();
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isSignup, setIsSignup] = useState(mode === 'signup');
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
-     
+
+    useEffect(() => {
+      setIsSignup(mode === 'signup');
+    }, [mode]);
+
+    if (isLoggedIn) {
+      return <Navigate to="/" replace />;
+    }
 
     function onSubmit(event) {
         event.preventDefault();
@@ -66,10 +73,12 @@ function LoginForm({ mode = 'login' }) {
        <p className={`${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>{isSignup ? 'Sign up to start shopping.' : 'Login to continue your journey'}</p>
      </div>
 
-     <div>
-       <label className={`block font-semibold mb-2 ${darkMode ? 'text-slate-200' : 'text-gray-700'}`}>Full Name</label>
-       <input type='text' placeholder='John Doe' onChange={setFullNameFn} value={fullName} className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 ${darkMode ? 'border-slate-700 bg-slate-800 text-white placeholder-slate-400' : 'border-gray-200 bg-white text-gray-900 placeholder-gray-500'}`} />
-     </div>
+     {isSignup && (
+       <div>
+         <label className={`block font-semibold mb-2 ${darkMode ? 'text-slate-200' : 'text-gray-700'}`}>Full Name</label>
+         <input type='text' placeholder='John Doe' onChange={setFullNameFn} value={fullName} className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 ${darkMode ? 'border-slate-700 bg-slate-800 text-white placeholder-slate-400' : 'border-gray-200 bg-white text-gray-900 placeholder-gray-500'}`} />
+       </div>
+     )}
 
      <div>
        <label className={`block font-semibold mb-2 ${darkMode ? 'text-slate-200' : 'text-gray-700'}`}>Email</label>
@@ -96,8 +105,9 @@ function LoginForm({ mode = 'login' }) {
         <button
           type="button"
           onClick={() => {
-            setIsSignup((prev) => !prev);
+            navigate(isSignup ? '/login' : '/signup');
             setError('');
+            setConfirmPassword('');
           }}
           className="font-semibold text-indigo-500 hover:text-indigo-600"
         >
